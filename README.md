@@ -17,5 +17,5 @@ docker compose up -d
 ## Notes
 
 - Add new scrape targets in `prometheus/prometheus.yml`.
-- Grafana starts with the built-in `admin` / `admin` login.
-- The stack is meant to be reused across `pminspect`, `pm-trades-db`, and future services.
+- Grafana starts with the built-in `admin` / `admin` login. (to change u may need to run `docker compose down -v` to clear volume)
+- The stack is meant to be reused across `pminspect`, `pm-trades-db`, and other services.
