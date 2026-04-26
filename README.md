@@ -19,6 +19,8 @@ docker compose up -d
 - Add new scrape targets in `prometheus/prometheus.yml`.
 - Prometheus scrapes `pm-trades-db` from `host.docker.internal:8001/metrics`.
 - Prometheus also scrapes Postgres via `postgres_exporter`.
+- Grafana auto-loads a `metrics-pm-trades-db` dashboard from provisioning.
+- The dashboard is split into `Overview`, `Service details`, and `Postgres details`.
 - Grafana starts with the built-in `admin` / `admin` login. (to change u may need to run `docker compose down -v` to clear volume)
 - The stack is meant to be reused across `pminspect`, `pm-trades-db`, and other services.
 
