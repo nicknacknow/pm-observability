@@ -1,7 +1,6 @@
 services:
   prometheus:
     image: prom/prometheus:v2.55.1
-    container_name: pm-prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus
@@ -16,7 +15,6 @@ services:
 
   postgres_exporter:
     image: prometheuscommunity/postgres-exporter:v0.16.0
-    container_name: pm-postgres-exporter
     environment:
       DATA_SOURCE_NAME: postgresql://postgres:postgres@host.docker.internal:5432/trade_store?sslmode=disable
     extra_hosts:
@@ -24,7 +22,6 @@ services:
 
   loki:
     image: grafana/loki:3.1.0
-    container_name: pm-loki
     command: -config.file=/etc/loki/local-config.yaml
     ports:
       - "3100:3100"
@@ -33,7 +30,6 @@ services:
 
   promtail:
     image: grafana/promtail:3.1.0
-    container_name: pm-promtail
     command: -config.file=/etc/promtail/promtail.yml
     volumes:
       - ./loki/promtail.yml:/etc/promtail/promtail.yml:ro
@@ -44,7 +40,6 @@ services:
 
   grafana:
     image: grafana/grafana-oss:11.3.0
-    container_name: pm-grafana
     ports:
       - "3000:3000"
     environment:
@@ -55,6 +50,7 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning:ro
     depends_on:
       - prometheus
+      - loki
 
 volumes:
   prometheus_data:
