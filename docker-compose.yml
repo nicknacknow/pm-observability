@@ -11,7 +11,7 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - prometheus_data:/prometheus
     networks:
-      - pm-observability
+      - pm-project
 
   postgres_exporter:
     image: prometheuscommunity/postgres-exporter:v0.16.0
@@ -58,6 +58,6 @@ volumes:
   loki_data:
 
 networks:
-  pm-observability:
+  pm-project:
     external: true
-    name: pm-observability
+    name: pm-project

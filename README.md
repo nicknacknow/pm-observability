@@ -11,7 +11,7 @@ Shared observability stack for local PM services.
 ## Run
 
 ```bash
-docker network create pm-observability
+docker network create pm-project
 cp .env.example .env
 docker compose up -d
 ```
@@ -28,7 +28,7 @@ docker compose up -d
 - Grafana starts with the built-in `admin` / `admin` login. (to change u may need to run `docker compose down -v` to clear volume)
 - The stack is meant to be reused across `pminspect`, `pm-trades-db`, and other services.
 
-All three compose projects attach to the shared `pm-observability` network. That lets Prometheus scrape both services by name while each service keeps the same internal metrics port (`8001`).
+All three compose projects attach to the shared `pm-project` network. That lets Prometheus scrape both services by name while each service keeps the same internal metrics port (`8001`).
 
 ## TODO:
 
