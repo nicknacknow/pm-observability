@@ -19,6 +19,8 @@ services:
       DATA_SOURCE_NAME: postgresql://postgres:postgres@host.docker.internal:5432/trade_store?sslmode=disable
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - pm-project
 
   loki:
     image: grafana/loki:3.1.0
@@ -51,6 +53,9 @@ services:
     depends_on:
       - prometheus
       - loki
+    networks:
+      - default
+      - pm-project
 
 volumes:
   prometheus_data:
