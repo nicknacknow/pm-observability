@@ -296,7 +296,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "hex0x"
         },
         "overrides": []
       },
@@ -709,12 +710,14 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(pminspect_block_processing_seconds_sum[5m])) / sum(rate(pminspect_block_processing_seconds_count[5m]))",
+          "editorMode": "code",
+          "expr": "sum(rate(pminspect_block_processing_seconds_sum[${Interval}])) / sum(rate(pminspect_block_processing_seconds_count[${Interval}]))",
           "legendFormat": "block processing avg",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Block Processing Average (5m)",
+      "title": "Block Processing Average",
       "type": "timeseries"
     },
     {
@@ -774,7 +777,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -806,12 +809,14 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(pminspect_trade_publish_seconds_sum[5m])) / sum(rate(pminspect_trade_publish_seconds_count[5m]))",
+          "editorMode": "code",
+          "expr": "1000 * (sum(rate(pminspect_trade_publish_seconds_sum[${Interval}])) / sum(rate(pminspect_trade_publish_seconds_count[${Interval}])))",
           "legendFormat": "trade publish avg",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Trade Publish Average (5m)",
+      "title": "Trade Publish Average",
       "type": "timeseries"
     },
     {
@@ -903,12 +908,14 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (method) (rate(pminspect_rpc_failures_total[5m]))",
+          "editorMode": "code",
+          "expr": "sum by (method) (rate(pminspect_rpc_failures_total[${Interval}]))",
           "legendFormat": "{{method}}",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "RPC Failures (5m)",
+      "title": "RPC Failures",
       "type": "timeseries"
     },
     {
@@ -1000,12 +1007,14 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(pminspect_transaction_decode_errors_total[5m])) + sum(rate(pminspect_trade_event_validation_failures_total[5m])) + sum(rate(pminspect_block_errors_total[5m]))",
+          "editorMode": "code",
+          "expr": "sum(rate(pminspect_transaction_decode_errors_total[${Interval}])) + sum(rate(pminspect_trade_event_validation_failures_total[${Interval}])) + sum(rate(pminspect_block_errors_total[${Interval}]))",
           "legendFormat": "pipeline failures",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Pipeline Failures (5m)",
+      "title": "Pipeline Failures",
       "type": "timeseries"
     },
     {
@@ -1102,16 +1111,54 @@
       "type": "logs"
     }
   ],
+  "preload": false,
   "refresh": "30s",
-  "schemaVersion": 39,
-  "style": "dark",
+  "schemaVersion": 40,
   "tags": [
     "pminspect",
     "metrics",
     "logs"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "text": "1m",
+          "value": "1m"
+        },
+        "label": "Interval",
+        "name": "Interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          }
+        ],
+        "query": "1m,2m,5m,10m,30m",
+        "type": "custom"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",
@@ -1124,17 +1171,11 @@
       "30s",
       "1m",
       "5m"
-    ],
-    "time_options": [
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "7d"
     ]
   },
   "timezone": "browser",
   "title": "pminspect Metrics",
   "uid": "pminspect-metrics",
-  "version": 1
+  "version": 6,
+  "weekStart": ""
 }
