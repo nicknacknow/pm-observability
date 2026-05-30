@@ -1529,8 +1529,8 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "node_pressure_memory_some_avg10{job=\"node_exporter\"} * 100",
-          "legendFormat": "some",
+          "expr": "rate(node_pressure_memory_waiting_seconds_total{job=\"node_exporter\"}[${Interval}]) * 100",
+          "legendFormat": "waiting",
           "range": true,
           "refId": "A"
         },
@@ -1540,13 +1540,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "node_pressure_memory_full_avg10{job=\"node_exporter\"} * 100",
-          "legendFormat": "full",
+          "expr": "rate(node_pressure_memory_stalled_seconds_total{job=\"node_exporter\"}[${Interval}]) * 100",
+          "legendFormat": "stalled",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "Memory pressure (PSI avg10 %) ",
+      "title": "Memory pressure (PSI % time)",
       "type": "timeseries"
     },
     {
