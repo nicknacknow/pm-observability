@@ -13,6 +13,22 @@ services:
     networks:
       - pm-project
 
+  node_exporter:
+    image: prom/node-exporter:v1.8.1
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --path.rootfs=/rootfs
+      - --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - pm-project
+
   postgres_exporter:
     image: prometheuscommunity/postgres-exporter:v0.16.0
     environment:
