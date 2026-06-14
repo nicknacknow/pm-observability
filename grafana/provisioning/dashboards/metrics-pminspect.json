@@ -548,7 +548,40 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -557,14 +590,10 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
               }
             ]
           },
-          "unit": "short"
+          "unit": "ops"
         },
         "overrides": []
       },
@@ -576,21 +605,18 @@
       },
       "id": 9,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
+        "legend": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
-          "values": false
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "11.3.0",
       "targets": [
@@ -599,13 +625,13 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(pminspect_monitor_errors_total)",
-          "legendFormat": "monitor errors",
+          "expr": "sum by (error_type) (rate(pminspect_monitor_errors_total[5m]))",
+          "legendFormat": "{{error_type}}",
           "refId": "A"
         }
       ],
-      "title": "Monitor Errors Total",
-      "type": "stat"
+      "title": "Monitor Errors by Type (5m)",
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -1000,12 +1026,30 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(pminspect_transaction_decode_errors_total[5m])) + sum(rate(pminspect_trade_event_validation_failures_total[5m])) + sum(rate(pminspect_block_errors_total[5m]))",
-          "legendFormat": "pipeline failures",
+          "expr": "rate(pminspect_transaction_decode_errors_total[5m])",
+          "legendFormat": "tx decode errors",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "rate(pminspect_trade_event_validation_failures_total[5m])",
+          "legendFormat": "validation errors",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (error_type) (rate(pminspect_block_errors_total[5m]))",
+          "legendFormat": "block: {{error_type}}",
+          "refId": "C"
         }
       ],
-      "title": "Pipeline Failures (5m)",
+      "title": "Pipeline Failures by Type (5m)",
       "type": "timeseries"
     },
     {
