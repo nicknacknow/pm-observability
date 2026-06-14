@@ -8,12 +8,12 @@ contactPoints:
           url: $__env{ALERT_WEBHOOK_URL}
           message: |
             {{ if eq .Status "firing" }}@everyone
-            {{ end }}{
-              "embeds": [{
-                "color": {{ if eq .Status "firing" }}15158332{{ else }}3066993{{ end }},
-                "title": "{{ if eq .Status "firing" }}🔴 FIRING{{ else }}✅ RESOLVED{{ end }}: {{ len .Alerts.Firing }} firing / {{ len .Alerts.Resolved }} resolved",
-                "description": "{{ range .Alerts.Firing }}**{{ .Labels.alertname }}** - `{{ .Labels.severity }}`\n{{ .Annotations.summary }}\n\n{{ end }}{{ range .Alerts.Resolved }}✅ **{{ .Labels.alertname }}** - Resolved\n\n{{ end }}[View Dashboard]({{ .ExternalURL }})",
-                "footer": { "text": "pm-observability" }
-              }]
-            }
+            :red_circle: FIRING: {{ len .Alerts.Firing }} firing / {{ len .Alerts.Resolved }} resolved
+            {{ else }}
+            :green_circle: RESOLVED: {{ len .Alerts.Resolved }} resolved
+            {{ end }}
+            {{ range .Alerts.Firing }}:small_red_triangle: **{{ .Labels.alertname }}** ({{ .Labels.severity }})
+            {{ end }}{{ range .Alerts.Resolved }}:white_check_mark: {{ .Labels.alertname }} - Resolved
+            {{ end }}
+            :bar_chart: {{ .ExternalURL }}
         disableResolveMessage: false
