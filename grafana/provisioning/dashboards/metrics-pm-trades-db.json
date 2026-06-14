@@ -23,7 +23,7 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
+  "graphTooltip": 1,
   "id": null,
   "links": [],
   "panels": [
@@ -281,12 +281,12 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pm_trades_db_redis_retries_total[5m])",
-          "legendFormat": "retries / 5m",
+          "expr": "increase(pm_trades_db_redis_retries_total[${Interval}])",
+          "legendFormat": "retries",
           "refId": "A"
         }
       ],
-      "title": "Redis Retries (5m)",
+      "title": "Redis Retries",
       "type": "timeseries"
     },
     {
@@ -327,12 +327,12 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pm_trades_db_trade_events_stored_total[5m])",
-          "legendFormat": "stored / 5m",
+          "expr": "increase(pm_trades_db_trade_events_stored_total[${Interval}])",
+          "legendFormat": "stored",
           "refId": "A"
         }
       ],
-      "title": "Trades Stored (5m)",
+      "title": "Trades Stored",
       "type": "timeseries"
     },
     {
@@ -373,12 +373,12 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pm_trades_db_malformed_trade_events_total[5m])",
-          "legendFormat": "malformed / 5m",
+          "expr": "increase(pm_trades_db_malformed_trade_events_total[${Interval}])",
+          "legendFormat": "malformed",
           "refId": "A"
         }
       ],
-      "title": "Malformed Events (5m)",
+      "title": "Malformed Events",
       "type": "timeseries"
     },
     {
@@ -478,8 +478,8 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pg_stat_database_xact_commit{job=\"postgres_exporter\",datname=\"trade_store\"}[5m])",
-          "legendFormat": "commits / 5m",
+          "expr": "increase(pg_stat_database_xact_commit{job=\"postgres_exporter\",datname=\"trade_store\"}[${Interval}])",
+          "legendFormat": "commits",
           "refId": "A"
         },
         {
@@ -487,12 +487,12 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pg_stat_database_xact_rollback{job=\"postgres_exporter\",datname=\"trade_store\"}[5m])",
-          "legendFormat": "rollbacks / 5m",
+          "expr": "increase(pg_stat_database_xact_rollback{job=\"postgres_exporter\",datname=\"trade_store\"}[${Interval}])",
+          "legendFormat": "rollbacks",
           "refId": "B"
         }
       ],
-      "title": "Postgres Transactions (5m)",
+      "title": "Postgres Transactions",
       "type": "timeseries"
     },
     {
@@ -555,7 +555,45 @@
     "metrics-pm-trades-db"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "text": "1m",
+          "value": "1m"
+        },
+        "label": "Interval",
+        "name": "Interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          }
+        ],
+        "query": "1m,2m,5m,10m,30m",
+        "type": "custom"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",
