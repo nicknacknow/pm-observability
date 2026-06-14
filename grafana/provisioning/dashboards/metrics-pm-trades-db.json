@@ -281,7 +281,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pm_trades_db_redis_retries_total[5m])",
+          "expr": "increase(pm_trades_db_redis_retries_total[${Interval}])",
           "legendFormat": "retries / 5m",
           "refId": "A"
         }
@@ -327,7 +327,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pm_trades_db_trade_events_stored_total[5m])",
+          "expr": "increase(pm_trades_db_trade_events_stored_total[${Interval}])",
           "legendFormat": "stored / 5m",
           "refId": "A"
         }
@@ -373,7 +373,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pm_trades_db_malformed_trade_events_total[5m])",
+          "expr": "increase(pm_trades_db_malformed_trade_events_total[${Interval}])",
           "legendFormat": "malformed / 5m",
           "refId": "A"
         }
@@ -478,7 +478,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pg_stat_database_xact_commit{job=\"postgres_exporter\",datname=\"trade_store\"}[5m])",
+          "expr": "increase(pg_stat_database_xact_commit{job=\"postgres_exporter\",datname=\"trade_store\"}[${Interval}])",
           "legendFormat": "commits / 5m",
           "refId": "A"
         },
@@ -487,7 +487,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "increase(pg_stat_database_xact_rollback{job=\"postgres_exporter\",datname=\"trade_store\"}[5m])",
+          "expr": "increase(pg_stat_database_xact_rollback{job=\"postgres_exporter\",datname=\"trade_store\"}[${Interval}])",
           "legendFormat": "rollbacks / 5m",
           "refId": "B"
         }
@@ -555,7 +555,45 @@
     "metrics-pm-trades-db"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "text": "1m",
+          "value": "1m"
+        },
+        "label": "Interval",
+        "name": "Interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          }
+        ],
+        "query": "1m,2m,5m,10m,30m",
+        "type": "custom"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",

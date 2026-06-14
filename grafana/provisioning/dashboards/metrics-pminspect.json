@@ -625,7 +625,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (error_type) (rate(pminspect_monitor_errors_total[5m]))",
+          "expr": "sum by (error_type) (rate(pminspect_monitor_errors_total[${Interval}]))",
           "legendFormat": "{{error_type}}",
           "refId": "A"
         }
@@ -735,7 +735,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(pminspect_block_processing_seconds_sum[5m])) / sum(rate(pminspect_block_processing_seconds_count[5m]))",
+          "expr": "sum(rate(pminspect_block_processing_seconds_sum[${Interval}])) / sum(rate(pminspect_block_processing_seconds_count[${Interval}]))",
           "legendFormat": "block processing avg",
           "refId": "A"
         }
@@ -832,7 +832,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(pminspect_trade_publish_seconds_sum[5m])) / sum(rate(pminspect_trade_publish_seconds_count[5m]))",
+          "expr": "sum(rate(pminspect_trade_publish_seconds_sum[${Interval}])) / sum(rate(pminspect_trade_publish_seconds_count[${Interval}]))",
           "legendFormat": "trade publish avg",
           "refId": "A"
         }
@@ -929,7 +929,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (method) (rate(pminspect_rpc_failures_total[5m]))",
+          "expr": "sum by (method) (rate(pminspect_rpc_failures_total[${Interval}]))",
           "legendFormat": "{{method}}",
           "refId": "A"
         }
@@ -1026,7 +1026,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "rate(pminspect_transaction_decode_errors_total[5m])",
+          "expr": "rate(pminspect_transaction_decode_errors_total[${Interval}])",
           "legendFormat": "tx decode errors",
           "refId": "A"
         },
@@ -1035,7 +1035,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "rate(pminspect_trade_event_validation_failures_total[5m])",
+          "expr": "rate(pminspect_trade_event_validation_failures_total[${Interval}])",
           "legendFormat": "validation errors",
           "refId": "B"
         },
@@ -1044,7 +1044,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (error_type) (rate(pminspect_block_errors_total[5m]))",
+          "expr": "sum by (error_type) (rate(pminspect_block_errors_total[${Interval}]))",
           "legendFormat": "block: {{error_type}}",
           "refId": "C"
         }
@@ -1155,7 +1155,45 @@
     "logs"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "text": "1m",
+          "value": "1m"
+        },
+        "label": "Interval",
+        "name": "Interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "2m",
+            "value": "2m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          }
+        ],
+        "query": "1m,2m,5m,10m,30m",
+        "type": "custom"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",
