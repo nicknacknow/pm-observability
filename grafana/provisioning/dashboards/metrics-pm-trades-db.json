@@ -23,7 +23,7 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "graphTooltip": 0,
+  "graphTooltip": 2,
   "id": null,
   "links": [],
   "panels": [
@@ -282,11 +282,11 @@
             "uid": "prometheus"
           },
           "expr": "increase(pm_trades_db_redis_retries_total[${Interval}])",
-          "legendFormat": "retries / 5m",
+          "legendFormat": "retries",
           "refId": "A"
         }
       ],
-      "title": "Redis Retries (5m)",
+      "title": "Redis Retries",
       "type": "timeseries"
     },
     {
@@ -328,11 +328,11 @@
             "uid": "prometheus"
           },
           "expr": "increase(pm_trades_db_trade_events_stored_total[${Interval}])",
-          "legendFormat": "stored / 5m",
+          "legendFormat": "stored",
           "refId": "A"
         }
       ],
-      "title": "Trades Stored (5m)",
+      "title": "Trades Stored",
       "type": "timeseries"
     },
     {
@@ -374,11 +374,11 @@
             "uid": "prometheus"
           },
           "expr": "increase(pm_trades_db_malformed_trade_events_total[${Interval}])",
-          "legendFormat": "malformed / 5m",
+          "legendFormat": "malformed",
           "refId": "A"
         }
       ],
-      "title": "Malformed Events (5m)",
+      "title": "Malformed Events",
       "type": "timeseries"
     },
     {
@@ -479,7 +479,7 @@
             "uid": "prometheus"
           },
           "expr": "increase(pg_stat_database_xact_commit{job=\"postgres_exporter\",datname=\"trade_store\"}[${Interval}])",
-          "legendFormat": "commits / 5m",
+          "legendFormat": "commits",
           "refId": "A"
         },
         {
@@ -488,11 +488,11 @@
             "uid": "prometheus"
           },
           "expr": "increase(pg_stat_database_xact_rollback{job=\"postgres_exporter\",datname=\"trade_store\"}[${Interval}])",
-          "legendFormat": "rollbacks / 5m",
+          "legendFormat": "rollbacks",
           "refId": "B"
         }
       ],
-      "title": "Postgres Transactions (5m)",
+      "title": "Postgres Transactions",
       "type": "timeseries"
     },
     {
