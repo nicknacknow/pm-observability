@@ -4,6 +4,7 @@ templates:
     template: |
       {{ define "discord.embed" -}}
       {
+        {{ if eq .Status "firing" }}"content": "@everyone\n\n",{{ end }}
         "embeds": [{
           "color": {{ if eq .Status "firing" }}15158332{{ else }}3066993{{ end }},
           "title": "{{ if eq .Status "firing" }}🔴 FIRING{{ else }}✅ RESOLVED{{ end }} — {{ len .Alerts.Firing }} firing / {{ len .Alerts.Resolved }} resolved",
