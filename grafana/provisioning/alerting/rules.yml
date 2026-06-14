@@ -24,7 +24,7 @@ groups:
         labels:
           severity: critical
         for: 1m
-        noDataState: NoData
+        noDataState: OK
         execErrState: Error
 
       - uid: redis-disconnect
@@ -46,7 +46,7 @@ groups:
         labels:
           severity: critical
         for: 30s
-        noDataState: NoData
+        noDataState: OK
         execErrState: Error
 
       - uid: node-down
@@ -68,7 +68,7 @@ groups:
         labels:
           severity: critical
         for: 1m
-        noDataState: Alerting
+        noDataState: OK
         execErrState: Error
 
       - uid: disk-space-critical
@@ -90,7 +90,7 @@ groups:
         labels:
           severity: warning
         for: 5m
-        noDataState: NoData
+        noDataState: OK
         execErrState: Error
 
       - uid: cpu-temp-high
@@ -112,7 +112,7 @@ groups:
         labels:
           severity: warning
         for: 2m
-        noDataState: NoData
+        noDataState: OK
         execErrState: Error
 
       - uid: pminspect-down
@@ -134,7 +134,7 @@ groups:
         labels:
           severity: critical
         for: 30s
-        noDataState: Alerting
+        noDataState: OK
         execErrState: Error
 
       - uid: postgres-down
@@ -156,5 +156,5 @@ groups:
         labels:
           severity: critical
         for: 1m
-        noDataState: Alerting
+        noDataState: OK
         execErrState: Error
