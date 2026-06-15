@@ -1,0 +1,19 @@
+apiVersion: 1
+contactPoints:
+  - name: Discord
+    receivers:
+      - uid: discord-webhook
+        type: discord
+        settings:
+          url: $__env{ALERT_WEBHOOK_URL}
+          message: |
+            {{ if eq .Status "firing" }}@everyone
+            :red_circle: FIRING: {{ len .Alerts.Firing }} firing / {{ len .Alerts.Resolved }} resolved
+            {{ else }}
+            :green_circle: RESOLVED: {{ len .Alerts.Resolved }} resolved
+            {{ end }}
+            {{ range .Alerts.Firing }}:small_red_triangle: **{{ .Labels.alertname }}** ({{ .Labels.severity }})
+            {{ end }}{{ range .Alerts.Resolved }}:white_check_mark: {{ .Labels.alertname }} - Resolved
+            {{ end }}
+            :bar_chart: {{ .ExternalURL }}
+        disableResolveMessage: false

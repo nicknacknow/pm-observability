@@ -1,0 +1,160 @@
+apiVersion: 1
+groups:
+  - orgId: 1
+    name: default
+    folder: Alerting
+    interval: 30s
+    rules:
+      - uid: trade-rate-zero
+        title: TradeRateZero
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: pm_trades_db_trade_events_stored_total == 0
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: Trade rate has dropped to zero
+        labels:
+          severity: critical
+        for: 1m
+        noDataState: OK
+        execErrState: Error
+
+      - uid: redis-disconnect
+        title: Redis Disconnect
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: pm_trades_db_redis_connected == 0
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: Redis connection lost
+        labels:
+          severity: critical
+        for: 30s
+        noDataState: OK
+        execErrState: Error
+
+      - uid: node-down
+        title: Node Down
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 120
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: up{job="node_exporter"} == 0
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: Node node_exporter is unreachable
+        labels:
+          severity: critical
+        for: 1m
+        noDataState: OK
+        execErrState: Error
+
+      - uid: disk-space-critical
+        title: Disk Space Critical
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: 100 - (node_filesystem_avail_bytes{mountpoint="/",job="node_exporter"} / node_filesystem_size_bytes{mountpoint="/",job="node_exporter"} * 100) > 90
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: Root FS usage exceeds 90%
+        labels:
+          severity: warning
+        for: 5m
+        noDataState: OK
+        execErrState: Error
+
+      - uid: cpu-temp-high
+        title: CPU Temp High
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 120
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: node_thermal_zone_temp{job="node_exporter"} > 80
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: CPU temperature exceeds 80°C
+        labels:
+          severity: warning
+        for: 2m
+        noDataState: OK
+        execErrState: Error
+
+      - uid: pminspect-down
+        title: pminspect Down
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 60
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: pminspect_monitor_running == 0
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: pminspect monitor is not running
+        labels:
+          severity: critical
+        for: 30s
+        noDataState: OK
+        execErrState: Error
+
+      - uid: postgres-down
+        title: Postgres Down
+        condition: A
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 120
+              to: 0
+            datasourceUid: prometheus
+            model:
+              expr: pg_up{job="postgres_exporter"} == 0
+              intervalMs: 1000
+              maxDataPoints: 100
+              refId: A
+        annotations:
+          summary: PostgreSQL is unreachable
+        labels:
+          severity: critical
+        for: 1m
+        noDataState: OK
+        execErrState: Error
